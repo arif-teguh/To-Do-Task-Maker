@@ -14,6 +14,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize()
 data class TodoRecord(@PrimaryKey(autoGenerate = true) val id: Long?,
                       @ColumnInfo(name = "title") val title: String,
-                      @ColumnInfo(name = "tanggal") val tanggal: String,
-                      @ColumnInfo(name = "jam") val jam: String,
-                      @ColumnInfo(name = "content") val content: String) : Parcelable
+                      @ColumnInfo(name = "dd") val dd: String,
+                      @ColumnInfo(name = "mm") val mm: String,
+                      @ColumnInfo(name = "yyyy") val yyyy : String,
+                      @ColumnInfo(name = "hour") val hour: String,
+                      @ColumnInfo(name = "minute") val minute: String,
+                      @ColumnInfo(name = "deskripsi") val deskripsi: String) : Parcelable

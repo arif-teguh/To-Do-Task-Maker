@@ -8,7 +8,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.naveentp.todo"
+        applicationId "id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1

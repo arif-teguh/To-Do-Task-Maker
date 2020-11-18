@@ -34,7 +34,7 @@ class TodoListAdapter(todoEvents: TodoEvents) : RecyclerView.Adapter<TodoListAda
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(todo: TodoRecord, listener: TodoEvents) {
             itemView.tv_item_title.text = todo.title
-            itemView.tv_item_content.text = todo.content
+            itemView.tv_item_content.text = todo.deskripsi
 
             itemView.iv_item_delete.setOnClickListener {
                 listener.onDeleteClicked(todo)
@@ -58,7 +58,7 @@ class TodoListAdapter(todoEvents: TodoEvents) : RecyclerView.Adapter<TodoListAda
                     val filteredList = arrayListOf<TodoRecord>()
                     for (row in todoList) {
                         if (row.title.toLowerCase().contains(charString.toLowerCase())
-                            || row.content.contains(charString.toLowerCase())) {
+                            || row.deskripsi.contains(charString.toLowerCase())) {
                             filteredList.add(row)
                         }
                     }
