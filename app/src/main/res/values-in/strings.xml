@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Task Maker</string>
+    <string name="tambah_task">Tambah Task</string>
+    <string name="nama_task">Nama Task</string>
+    <string name="name_form">Nama Task</string>
+    <string name="Tanggal">Tanggal</string>
+    <string name="day_form">Hari</string>
+    <string name="month_form">Bulan</string>
+    <string name="year_form">Tahun</string>
+    <string name="Time">Waktu</string>
+    <string name="hour_form">Jam</string>
+    <string name="Minute_form">Menit</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="deskripsi_form">Deskripsi</string>
+    <string name="tombol_simpan">Simpan Task</string>
+    <string name="tombol_lihat">Lihat list Task</string>
+    <string name="delete">Hapus</string>
+    <string name="save">Simpan</string>
+    <string name="enter_title">Masukkan Judul</string>
+    <string name="enter_content">Masukkan konten</string>
+    <string name="pleaseEnterTitle">Mohon masukkan judul</string>
+    <string name="pleaseEnterContent">Mohon masukkan konten</string>
+    <string name="viewOrEditTodo">Lihat/Ubah Task</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="createTodo">Buat Task</string>
+    <string name="title">Judul</string>
+    <string name="content">Konten</string>
+    <string name="search">Cari</string>
+    <string name="search_here">Cari Disini</string>
+    <string name="pleaseFillForm">Mohon Isi Form</string>
+</resources>
