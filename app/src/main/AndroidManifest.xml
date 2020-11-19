@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <application
         android:allowBackup="true"
@@ -9,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".MyIntentService"
+            android:enabled="true"
+            android:stopWithTask="false" />
+
         <activity android:name=".ui.todoList.TodoListActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -23,6 +30,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.createTodo.CreateTodoActivity" />
+
+        <receiver android:name="MyBroadcastReceiver" >
+        </receiver>
     </application>
 
 

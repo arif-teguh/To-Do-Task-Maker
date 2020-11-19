@@ -13,6 +13,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+
+
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.data.db.TodoRecord
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.createTodo.CreateTodoActivity
@@ -20,6 +22,7 @@ import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.utils.Constants
 
 import kotlinx.android.synthetic.main.activity_todo_list.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.util.*
 
 
 class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {

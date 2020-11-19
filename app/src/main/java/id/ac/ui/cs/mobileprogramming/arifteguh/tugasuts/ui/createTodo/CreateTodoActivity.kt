@@ -1,23 +1,33 @@
 package id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.createTodo
 
+
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.AlarmClock
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyBroadcastReceiver
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.data.db.TodoRecord
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.utils.Constants
-
-
 import kotlinx.android.synthetic.main.activity_create_todo.*
+import java.util.*
 
 
 class CreateTodoActivity : AppCompatActivity() {
     var checked = false
     var todoRecord: TodoRecord? = null
+    var year = 2000
+    var month = 1
+    var day = 1
+    var hour = 1
+    var minute = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,26 +88,30 @@ class CreateTodoActivity : AppCompatActivity() {
     private fun saveTodo() {
         if (validateFields()) {
             val id = if (todoRecord != null) todoRecord?.id else null
+            day = form_tanggal_dd_1.text.toString().filter { it.isLetterOrDigit() }.toInt()
+            month = form_tanggal_mm_1.text.toString().filter { it.isLetterOrDigit() }.toInt()
+            year = form_tanggal_yy_1.text.toString().filter { it.isLetterOrDigit() }.toInt()
+            hour = form_waktu_hh_1.text.toString().filter { it.isLetterOrDigit() }.toInt()
+            minute = form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() }.toInt()
             val todo = TodoRecord(id = id, title = form_title.text.toString(),
-                 dd = form_tanggal_dd_1.text.toString().filter { it.isLetterOrDigit() },
-                 mm = form_tanggal_mm_1.text.toString().filter { it.isLetterOrDigit() },
-                 yyyy = form_tanggal_yy_1.text.toString().filter { it.isLetterOrDigit() },
-                 hour = form_waktu_hh_1.text.toString().filter { it.isLetterOrDigit() },
-                 minute = form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() },
+                 dd = day.toString(),
+                 mm = month.toString(),
+                 yyyy = year.toString(),
+                 hour = hour.toString(),
+                 minute = minute.toString(),
                  deskripsi = form_deskripsi.text.toString())
 
             if(checked) {
                 val intentAlarm = Intent(AlarmClock.ACTION_SET_ALARM)
                 intentAlarm.putExtra(
-                    AlarmClock.EXTRA_HOUR,
-                    (form_waktu_hh_1.text.toString().filter { it.isLetterOrDigit() }).toInt()
+                    AlarmClock.EXTRA_HOUR, (hour)
                 )
                 intentAlarm.putExtra(
-                    AlarmClock.EXTRA_MINUTES,
-                    (form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() }).toInt()
+                    AlarmClock.EXTRA_MINUTES, (minute)
                 )
                 startActivity(intentAlarm)
             }
+            startAlert()
             val intent = Intent()
             intent.putExtra(Constants.INTENT_OBJECT, todo)
             setResult(RESULT_OK, intent)
@@ -145,5 +159,26 @@ class CreateTodoActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    fun startAlert() {
+        val i = (form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() }).toInt()
+        val intent = Intent(this, MyBroadcastReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this.applicationContext, 234324243, intent, 0
+        )
+        val cal: Calendar = Calendar.getInstance()
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month-1);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        val alarmManager =
+            getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager[AlarmManager.RTC_WAKEUP, cal.timeInMillis] = pendingIntent
+
     }
 }

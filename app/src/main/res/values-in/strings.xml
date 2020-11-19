@@ -29,4 +29,5 @@
     <string name="search">Cari</string>
     <string name="search_here">Cari Disini</string>
     <string name="pleaseFillForm">Mohon Isi Form</string>
+    <string name="time_up">Cek task</string>
 </resources>
