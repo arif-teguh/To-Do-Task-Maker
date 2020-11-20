@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyIntentService
 
 
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R

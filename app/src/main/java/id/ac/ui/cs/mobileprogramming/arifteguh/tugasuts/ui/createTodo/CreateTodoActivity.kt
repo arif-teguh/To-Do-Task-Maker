@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyBroadcastReceiver
+import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyIntentService
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.data.db.TodoRecord
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.utils.Constants
@@ -162,11 +163,6 @@ class CreateTodoActivity : AppCompatActivity() {
     }
 
     fun startAlert() {
-        val i = (form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() }).toInt()
-        val intent = Intent(this, MyBroadcastReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            this.applicationContext, 234324243, intent, 0
-        )
         val cal: Calendar = Calendar.getInstance()
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month-1);
@@ -175,10 +171,24 @@ class CreateTodoActivity : AppCompatActivity() {
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
+        //val i = (form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() }).toInt()
+
+        val intent = Intent(this, MyBroadcastReceiver::class.java)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            this.applicationContext, 234324243, intent, 0
+        )
 
         val alarmManager =
             getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, cal.timeInMillis] = pendingIntent
+
+        val alarmManager2: AlarmManager = this.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent2 = Intent(this.applicationContext, MyIntentService::class.java)
+        intent2.action = MyIntentService.ACTION_SEND_TEST_MESSAGE
+        intent2.putExtra(MyIntentService.EXTRA_MESSAGE, "Test alarm")
+        val pendingIntent2 = PendingIntent.getService(this.applicationContext, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
+        alarmManager2.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent2)
 
     }
 }
