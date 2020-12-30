@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.todoList
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -18,17 +19,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyIntentService
-
-
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.data.db.TodoRecord
+import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.opengl.PermissionRequiredActivity
+
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.createTodo.CreateTodoActivity
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.utils.Constants
-
 import kotlinx.android.synthetic.main.activity_todo_list.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.util.*
 
 
 class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
@@ -37,9 +35,12 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
     private lateinit var searchView: SearchView
     private lateinit var todoAdapter: TodoListAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_list)
+
+
 
         //Setting up RecyclerView
         rv_todo_list.layoutManager = LinearLayoutManager(this)
@@ -59,6 +60,8 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
             val intent = Intent(this@TodoListActivity, CreateTodoActivity::class.java)
             startActivityForResult(intent, Constants.INTENT_CREATE_TODO)
         }
+
+
 
         if (ContextCompat.checkSelfPermission(this@TodoListActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION) !==
@@ -81,6 +84,8 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
         }
     }
 
+    external fun stringFromJNI(x: Int): String?
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {
         when (requestCode) {
@@ -94,10 +99,13 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
                         ) ===
                                 PackageManager.PERMISSION_GRANTED)
                     ) {
-                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                        //System.loadLibrary("hello-jni")
+                        //val test = stringFromJNI(0)
+                        Toast.makeText(this, "accepted ", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@TodoListActivity, PermissionRequiredActivity::class.java)
+                    startActivity(intent)
                 }
                 return
             }
