@@ -9,12 +9,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
@@ -25,7 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.data.db.TodoRecord
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.opengl.PermissionRequiredActivity
-
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.createTodo.CreateTodoActivity
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.utils.Constants
 import kotlinx.android.synthetic.main.activity_todo_list.*
@@ -107,7 +104,7 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
         }
     }
 
-    external fun stringFromJNI(x: Int): String?
+    external fun stringFromJNI(x: Int): String
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {
@@ -122,9 +119,9 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
                         ) ===
                                 PackageManager.PERMISSION_GRANTED)
                     ) {
-                        System.loadLibrary("hello-jni")
+
                         var test = "accepted"
-                        test = stringFromJNI(0)
+
 
                         Toast.makeText(this, test.toString(), Toast.LENGTH_SHORT).show()
                     }
