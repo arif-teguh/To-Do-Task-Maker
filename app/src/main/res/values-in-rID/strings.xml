@@ -30,4 +30,8 @@
     <string name="search_here">Cari Disini</string>
     <string name="pleaseFillForm">Mohon Isi Form</string>
     <string name="time_up">Cek task</string>
+    <string name="penjelasan1">Mohon ketersediaan menerima </string>
+    <string name="penjelasan2">izin memakai lokasi dikarenakan </string>
+    <string name="penjelasan3">aplikasi membutuhkan lokasi untuk</string>
+    <string name="penjelasan4">timezone agar remiander bekerja</string>
 </resources>

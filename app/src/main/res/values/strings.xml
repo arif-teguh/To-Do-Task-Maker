@@ -29,4 +29,8 @@
     <string name="search_here">Search here</string>
     <string name="pleaseFillForm">pleaseFillForm</string>
     <string name="time_up">Check your task</string>
+    <string name="penjelasan1">Location acces needed </string>
+    <string name="penjelasan2">To determine your timezone </string>
+    <string name="penjelasan3">So the app can remain you</string>
+    <string name="penjelasan4">at the correct time</string>
 </resources>
