@@ -2,9 +2,12 @@ package id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.createTodo
 
 
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.AlarmClock
 import android.view.Menu
@@ -12,6 +15,8 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyBroadcastReceiver
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyIntentService
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
@@ -29,6 +34,12 @@ class CreateTodoActivity : AppCompatActivity() {
     var day = 1
     var hour = 1
     var minute = 1
+    var notificationId = 1
+    var builder = NotificationCompat.Builder(this, notificationId.toString())
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setContentTitle("To-Do-Task")
+        .setContentText("Task Created")
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -190,5 +201,28 @@ class CreateTodoActivity : AppCompatActivity() {
         val pendingIntent2 = PendingIntent.getService(this.applicationContext, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
         alarmManager2.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent2)
 
+        createNotificationChannel()
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(notificationId, builder.build())
+        }
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "To-Do-Task"
+            val descriptionText = form_title.text
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(notificationId.toString(), name, importance).apply {
+                description = descriptionText.toString()
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }

@@ -8,10 +8,13 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
@@ -36,6 +39,7 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
     private lateinit var todoAdapter: TodoListAdapter
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_list)
@@ -54,11 +58,30 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
             todoAdapter.setAllTodoItems(it)
         })
 
+        val connMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var isWifiConn: Boolean = false
+        var isMobileConn: Boolean = false
+        connMgr.allNetworks.forEach { network ->
+            connMgr.getNetworkInfo(network).apply {
+                if (type == ConnectivityManager.TYPE_WIFI) {
+                    isWifiConn = isWifiConn or isConnected
+                }
+                if (type == ConnectivityManager.TYPE_MOBILE) {
+                    isMobileConn = isMobileConn or isConnected
+                }
+            }
+        }
+
         //FAB click listener
         fab_new_todo.setOnClickListener {
             resetSearchView()
-            val intent = Intent(this@TodoListActivity, CreateTodoActivity::class.java)
-            startActivityForResult(intent, Constants.INTENT_CREATE_TODO)
+            if(isWifiConn) {
+                val intent = Intent(this@TodoListActivity, CreateTodoActivity::class.java)
+                startActivityForResult(intent, Constants.INTENT_CREATE_TODO)
+            }
+            else{
+                Toast.makeText(this, "Harus konek ke wifi untuk create todo ", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -104,8 +127,9 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
                         Toast.makeText(this, "accepted ", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    val intent = Intent(this@TodoListActivity, PermissionRequiredActivity::class.java)
-                    startActivity(intent)
+                    //val intent = Intent(this@TodoListActivity, PermissionRequiredActivity::class.java)
+                    //startActivity(intent)
+                    Toast.makeText(this, "accepted ", Toast.LENGTH_SHORT).show()
                 }
                 return
             }
