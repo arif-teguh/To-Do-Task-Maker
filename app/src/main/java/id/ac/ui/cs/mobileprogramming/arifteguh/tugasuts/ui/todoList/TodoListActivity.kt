@@ -104,7 +104,7 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
         }
     }
 
-    external fun stringFromJNI(x: Int): String
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {

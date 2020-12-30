@@ -26,9 +26,11 @@
  *   hello-jni/app/src/main/java/com/example/hellojni/HelloJni.java
  */
 
+
 JNIEXPORT jstring JNICALL
-Java_id_ac_ui_cs_mobileprogramming_arifteguh_tugasuts_opengl_PermissionRequiredActivity_stringFromJNI(
-        JNIEnv *env, jobject thiz, jint x) {
-    // TODO: implement stringFromJNI()
-    return (*env)->NewStringUTF(env, 'Success'+x);
+Java_id_ac_ui_cs_mobileprogramming_arifteguh_tugasuts_opengl_PermissionRequiredActivity_JNi(
+        JNIEnv *env, jobject thiz) {
+    // TODO: implement JNi()
+
+    return (*env)->NewStringUTF(env, "Alert "  ".");
 }

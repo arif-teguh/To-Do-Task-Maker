@@ -9,22 +9,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R;
 
 public class PermissionRequiredActivity extends AppCompatActivity {
-
+    public native String JNi();
     private OGLView oglView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        oglView = (OGLView) findViewById(R.id.oglView);
         System.loadLibrary("hello-jni");
-        String test = stringFromJNI(20);
+        String test = JNi();
         TextView main_text =  (TextView)findViewById(R.id.main_text);
         main_text.setText(test);
+
+        oglView = (OGLView) findViewById(R.id.oglView);
+
     }
 
-    public native String stringFromJNI(int x);
+
 
     @Override
     protected void onPause() {
