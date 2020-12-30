@@ -8,6 +8,16 @@
 
     <include layout="@layout/content_main" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="4dp"
+        android:textColor="@android:color/background_dark"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_todo"
         android:layout_width="wrap_content"
