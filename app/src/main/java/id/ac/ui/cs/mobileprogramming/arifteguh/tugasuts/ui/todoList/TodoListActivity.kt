@@ -122,14 +122,16 @@ class TodoListActivity : AppCompatActivity(), TodoListAdapter.TodoEvents {
                         ) ===
                                 PackageManager.PERMISSION_GRANTED)
                     ) {
-                        //System.loadLibrary("hello-jni")
-                        //val test = stringFromJNI(0)
-                        Toast.makeText(this, "accepted ", Toast.LENGTH_SHORT).show()
+                        System.loadLibrary("hello-jni")
+                        var test = "accepted"
+                        test = stringFromJNI(0)
+
+                        Toast.makeText(this, test.toString(), Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    //val intent = Intent(this@TodoListActivity, PermissionRequiredActivity::class.java)
-                    //startActivity(intent)
-                    Toast.makeText(this, "accepted ", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@TodoListActivity, PermissionRequiredActivity::class.java)
+                    startActivity(intent)
+                    //Toast.makeText(this, "accepted", Toast.LENGTH_SHORT).show()
                 }
                 return
             }
