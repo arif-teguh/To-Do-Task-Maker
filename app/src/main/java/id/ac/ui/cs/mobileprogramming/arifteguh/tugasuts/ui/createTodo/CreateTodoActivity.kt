@@ -1,18 +1,22 @@
 package id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.createTodo
 
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.AlarmClock
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyBroadcastReceiver
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.data.db.TodoRecord
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.notifbg.NotificationEventReceiver
@@ -30,7 +34,7 @@ class CreateTodoActivity : AppCompatActivity() {
     var day = 1
     var hour = 1
     var minute = 1
-    var notificationId = 2
+    var notificationId = 1
     var builder = NotificationCompat.Builder(this, notificationId.toString())
         .setSmallIcon(R.drawable.ic_launcher_foreground)
         .setContentTitle("To-Do-Task")
@@ -199,17 +203,24 @@ class CreateTodoActivity : AppCompatActivity() {
         val pendingIntent2 = PendingIntent.getService(this.applicationContext, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
         alarmManager2.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent2)
         **/
+
         createNotificationChannel()
+
         with(NotificationManagerCompat.from(this)) {
             // notificationId is a unique int for each notification that you must define
             notify(notificationId, builder.build())
         }
+
 
         NotificationEventReceiver.setupAlarm(applicationContext , cal)
         val notif = Intent(this, NotificationEventReceiver::class.java)
         notif.setAction("ACTION_START_NOTIFICATION_SERVICE")
         (this.application as GlobalVar).setSomeVariable(cal.timeInMillis)
         sendBroadcast(notif)
+
+
+
+
 
 
 
