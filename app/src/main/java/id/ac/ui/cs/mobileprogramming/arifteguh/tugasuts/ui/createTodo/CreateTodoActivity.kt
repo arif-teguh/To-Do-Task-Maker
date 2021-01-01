@@ -1,10 +1,8 @@
 package id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.ui.createTodo
 
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,16 +10,14 @@ import android.os.Bundle
 import android.provider.AlarmClock
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyBroadcastReceiver
-import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.MyIntentService
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.R
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.data.db.TodoRecord
+import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.notifbg.NotificationEventReceiver
 import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.utils.Constants
+import id.ac.ui.cs.mobileprogramming.arifteguh.tugasuts.utils.GlobalVar
 import kotlinx.android.synthetic.main.activity_create_todo.*
 import java.util.*
 
@@ -34,7 +30,7 @@ class CreateTodoActivity : AppCompatActivity() {
     var day = 1
     var hour = 1
     var minute = 1
-    var notificationId = 1
+    var notificationId = 2
     var builder = NotificationCompat.Builder(this, notificationId.toString())
         .setSmallIcon(R.drawable.ic_launcher_foreground)
         .setContentTitle("To-Do-Task")
@@ -182,8 +178,9 @@ class CreateTodoActivity : AppCompatActivity() {
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        //val i = (form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() }).toInt()
 
+        //val i = (form_waktu_minute_1.text.toString().filter { it.isLetterOrDigit() }).toInt()
+        /**
         val intent = Intent(this, MyBroadcastReceiver::class.java)
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -194,19 +191,28 @@ class CreateTodoActivity : AppCompatActivity() {
             getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, cal.timeInMillis] = pendingIntent
 
+
         val alarmManager2: AlarmManager = this.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent2 = Intent(this.applicationContext, MyIntentService::class.java)
         intent2.action = MyIntentService.ACTION_SEND_TEST_MESSAGE
         intent2.putExtra(MyIntentService.EXTRA_MESSAGE, "Test alarm")
         val pendingIntent2 = PendingIntent.getService(this.applicationContext, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
         alarmManager2.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent2)
-
+        **/
         createNotificationChannel()
-
         with(NotificationManagerCompat.from(this)) {
             // notificationId is a unique int for each notification that you must define
             notify(notificationId, builder.build())
         }
+
+        NotificationEventReceiver.setupAlarm(applicationContext , cal)
+        val notif = Intent(this, NotificationEventReceiver::class.java)
+        notif.setAction("ACTION_START_NOTIFICATION_SERVICE")
+        (this.application as GlobalVar).setSomeVariable(cal.timeInMillis)
+        sendBroadcast(notif)
+
+
+
     }
 
     private fun createNotificationChannel() {
@@ -225,4 +231,6 @@ class CreateTodoActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
+
+
 }
